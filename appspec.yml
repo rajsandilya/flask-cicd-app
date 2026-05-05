@@ -1,0 +1,32 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /web/
+    overwrite: yes
+file_exists_behavior: OVERWRITE
+hooks:
+  BeforeInstall:
+    - location: scripts/stop_flask.sh
+      timeout: 300
+      runas: root
+  AfterInstall:
+    - location: scripts/mkdir.sh
+      timeout: 300
+      runas: root
+    - location: scripts/install_deps.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: scripts/start_flask.sh
+      timeout: 300
+      runas: root
+  ApplicationStop:
+    - location: scripts/stop_flask1.sh
+      timeout: 300
+      runas: root
+  ValidateService:
+    - location: scripts/validate_service.sh
+      timeout: 300
+      runas: root
+
